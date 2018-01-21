@@ -72,17 +72,11 @@ namespace watermarkRemover
                             byte[] bst = st.GetBytes();
                             string str = System.Text.Encoding.UTF8.GetString(bst);
                             string newstr = str;
-                            string wmatch = "<</Subtype /Watermark ";                 
-                            int indWM = str.IndexOf(wmatch);
-                            if (indWM >= 0)
-                            {
-                                int indBegin = str.IndexOf("BDC", indWM);
-                                int indBegin2 = str.LastIndexOf("\n", indBegin, indBegin);
-                                if (indBegin2 == -1) indBegin2 = 0;
-                                int indEnd = str.IndexOf("EMC", indBegin);
 
-                                newstr = str.Remove(indBegin2, indEnd - indBegin2 + 4);
-                            }
+                            newstr = deleteWatermarkByProperty(newstr);
+
+                            newstr = deleteWatermarkByPattern(newstr, wm);
+
                             byte[] newbst = System.Text.Encoding.UTF8.GetBytes(newstr);
                             st.SetData(newbst);
 
@@ -96,6 +90,30 @@ namespace watermarkRemover
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        private static string deleteWatermarkByProperty(string origin)
+        {
+            string newstr = origin;
+            string wmatch = "<</Subtype /Watermark ";
+            int indWM = origin.IndexOf(wmatch);
+            if (indWM >= 0)
+            {
+                int indBegin = origin.IndexOf("BDC", indWM);
+                int indBegin2 = origin.LastIndexOf("\n", indBegin, indBegin);
+                if (indBegin2 == -1) indBegin2 = 0;
+                int indEnd = origin.IndexOf("EMC", indBegin);
+
+                newstr = origin.Remove(indBegin2, indEnd - indBegin2 + 4);
+            }
+            return newstr;
+        }
+
+        private static string deleteWatermarkByPattern(string origin, string wm)
+        {
+            string newstr = origin;
+            //TBD
+            return newstr;
         }
 
         private static void deletePDFEncrypt(string SourceName, string DestName)
