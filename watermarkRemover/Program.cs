@@ -111,7 +111,50 @@ namespace watermarkRemover
         private static string deleteWatermarkByPattern(string origin, string wm)
         {
             string newstr = origin;
-            //TBD
+
+            int indBT = newstr.IndexOf("BT");
+            while(indBT >= 0)
+            {
+                int indET = newstr.IndexOf("ET", indBT);
+                if(indET == -1)
+                {
+                    throw new Exception("BT ET Not Match Exception");
+                }
+
+                int indTj = newstr.IndexOf("Tj", indBT, indET - indBT);
+                if (indTj != -1)
+                {
+                    int indEParenthesis = newstr.LastIndexOf(")", indTj, indTj - indBT);
+                    int indEAngleBracket = newstr.LastIndexOf(">", indTj, indTj - indBT);
+                    int indESquareBracket = newstr.LastIndexOf("]", indTj, indTj - indBT);
+                    if (indEParenthesis > indEAngleBracket && indEParenthesis > indESquareBracket)
+                    {
+                        int indParenthesis = newstr.LastIndexOf("(", indEParenthesis, indEParenthesis - indBT);
+                        if (indParenthesis == -1)
+                        {
+                            throw new Exception("Parenthesis Not Match Exception");
+                        }
+                        string text = newstr.Substring(indParenthesis + 1, indEParenthesis - indParenthesis - 1);
+                        if (text.StartsWith(wm))
+                        {
+                            newstr = newstr.Remove(indBT, indET - indBT + 3);
+                            indET = indBT;
+                        }
+                    }
+                    else if (indEAngleBracket > indEParenthesis && indEAngleBracket > indESquareBracket)
+                    {
+                        int indAngleBracket = newstr.LastIndexOf("<", indEAngleBracket, indEAngleBracket - indBT);
+                        if (indAngleBracket == -1)
+                        {
+                            throw new Exception("AngleBracket Not Match Exception");
+                        }
+                        //Decode Text //TBD
+
+                    }
+                }
+
+                indBT = newstr.IndexOf("BT", indET);         
+            }
             return newstr;
         }
 
