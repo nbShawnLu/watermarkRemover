@@ -101,10 +101,9 @@ namespace watermarkRemover
             {
                 int indBegin = origin.IndexOf("BDC", indWM);
                 int indBegin2 = origin.LastIndexOf("\n", indBegin, indBegin);
-                if (indBegin2 == -1) indBegin2 = 0;
                 int indEnd = origin.IndexOf("EMC", indBegin);
 
-                newstr = origin.Remove(indBegin2, indEnd - indBegin2 + 4);
+                newstr = origin.Remove(indBegin2 + 1, indEnd - indBegin2 + 4);
             }
             return newstr;
         }
