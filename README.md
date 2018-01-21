@@ -1,4 +1,4 @@
-## This is still a prototype, almost useless, please  use it carefully.
+## This is still a prototype, only works on specific files, please  use it carefully.
 ## This is a tool that helps(maybe in someday) you to remove watermark in PDF, make sure you have the right to do this.
 
 # Dependencies
