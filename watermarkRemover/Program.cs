@@ -5,14 +5,7 @@ using System.Text;
 using System.IO;
 using System.IO.Compression;
 using iText.Kernel.Pdf;
-using iText.Kernel.Geom;
 using iText.Kernel.Pdf.Canvas;
-using iText.Kernel.Pdf.Canvas.Parser;
-using iText.Kernel.Pdf.Canvas.Parser.Listener;
-
-using iText.Layout;
-using iText.IO.Font;
-using iText.IO.Font.Cmap;
 
 
 namespace watermarkRemover
