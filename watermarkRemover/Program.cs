@@ -72,11 +72,10 @@ namespace watermarkRemover
                             byte[] bst = st.GetBytes();
                             string str = System.Text.Encoding.UTF8.GetString(bst);
                             string newstr = str;
-                            string wmatch = "Watermark";                 
+                            string wmatch = "<</Subtype /Watermark ";                 
                             int indWM = str.IndexOf(wmatch);
                             if (indWM >= 0)
                             {
-
                                 int indBegin = str.IndexOf("BDC", indWM);
                                 int indBegin2 = str.LastIndexOf("\n", indBegin, indBegin);
                                 if (indBegin2 == -1) indBegin2 = 0;
